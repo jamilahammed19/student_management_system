@@ -1,9 +1,4 @@
-/**
- * AdminLTE Demo Menu
- * ------------------
- * You should not use this file in production.
- * This file is for demo purposes only.
- */
+
 (function ($) {
   'use strict'
 
@@ -40,7 +35,7 @@
   ]
 
   $container.append(
-    '<h5>Customize AdminLTE</h5><hr class="mb-2"/>'
+    '<h5>Customize ISC</h5><hr class="mb-2"/>'
   )
 
   var $no_border_checkbox = $('<input />', {
