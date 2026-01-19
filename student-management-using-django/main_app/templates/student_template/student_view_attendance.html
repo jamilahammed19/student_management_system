@@ -1,85 +1,105 @@
 {% extends 'main_app/base.html' %}
 {% load static %}
 {% block page_title %}{{page_title}}{% endblock page_title %}
+
 {% block custom_css %}
 <style>
-.attendance_div_red{
-    padding: 10px;
-    background: #f44336;
-    border: 3px solid white;
-    text-align: center;
-    color: #fff;
-    border-radius: 30px;
-    box-shadow: 1px 1px 1px grey;
-    margin: 5px;
-}
-.attendance_div_green{
-    padding: 10px;
-    background: #4CAF50;
-    border: 3px solid white;
-    text-align: center;
-    color: #fff;
-    border-radius: 30px;
-    box-shadow: 1px 1px 1px grey;
-    margin: 5px;
-}
+    /* Modernized Attendance Cards */
+    .attendance_div_green {
+        background-color: #f0fff4; /* Light Green Background */
+        border: 1px solid #c6f6d5;
+        border-left: 5px solid #48bb78; /* Strong Green Accent */
+        color: #2f855a;
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        transition: transform 0.2s;
+    }
+    .attendance_div_green:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .attendance_div_red {
+        background-color: #fff5f5; /* Light Red Background */
+        border: 1px solid #fed7d7;
+        border-left: 5px solid #f56565; /* Strong Red Accent */
+        color: #c53030;
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        transition: transform 0.2s;
+    }
+    .attendance_div_red:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
 </style>
 {% endblock custom_css %}
 
 {% block content %}
 
-<section class="content">
+<section class="content py-5" style="background-color: #f4f6f9;">
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <!-- general form elements -->
-                <div class="card card-primary">
-                    <div class="card-header">
-                        <h3 class="card-title">{{page_title}}</h3>
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                
+                <div class="card border-0 shadow-lg" style="border-radius: 15px; overflow: hidden;">
+                    
+                    <div class="card-header border-0 py-3" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <div class="d-flex align-items-center">
+                            <h3 class="card-title m-0 text-white font-weight-bold">
+                                <i class="fas fa-calendar-check mr-2"></i> {{page_title}}
+                            </h3>
+                        </div>
                     </div>
-                    <!-- /.card-header -->
-                    <!-- form start -->
-                    <div class="card-body">
 
-
-
-                        <div class="form-group">
-                            <label>Select Subject</label>
-                            <select  id="subject" class="form-control">
-                                <option value="">----</option>
-                                {% for subject in subjects  %}
-                                <option value="{{subject.id}}">{{subject.name}} </option>
+                    <div class="card-body p-4 bg-white">
+                        
+                        <div class="form-group mb-4">
+                            <label class="text-muted font-weight-bold text-uppercase small">Select Subject</label>
+                            <select id="subject" class="form-control form-control-lg border-2" style="border-radius: 10px;">
+                                <option value="">-- Choose Subject --</option>
+                                {% for subject in subjects %}
+                                <option value="{{subject.id}}">{{subject.name}}</option>
                                 {% endfor %}
                             </select>
                         </div>
+
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label>Start Date</label>
-                                    <input type="date" class="form-control" placeholder="Start Date" name="start_date" required id="start_date">
+                                    <label class="text-muted font-weight-bold text-uppercase small">Start Date</label>
+                                    <input type="date" class="form-control border-2" style="border-radius: 10px; height: 50px;" name="start_date" required id="start_date">
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label>End Date</label>
-                                    <input type="date" class="form-control" placeholder="End Date" name="end_date"  id="end_date">
+                                    <label class="text-muted font-weight-bold text-uppercase small">End Date</label>
+                                    <input type="date" class="form-control border-2" style="border-radius: 10px; height: 50px;" name="end_date" id="end_date">
                                 </div>
                             </div>
-                            <button type="button" id="fetch_attendance" class="btn btn-primary btn-block">Fetch
-                                Attendance Data</button>
-               </div>
+                        </div>
 
+                        <div class="mt-4">
+                            <button type="button" id="fetch_attendance" class="btn btn-primary btn-block btn-lg shadow-sm" style="border-radius: 10px; font-weight: bold;">
+                                <i class="fas fa-search mr-2"></i> Fetch Attendance Data
+                            </button>
+                        </div>
                     </div>
-                    <!-- /.card-body -->
-
-                    <div class="card-footer">
-                            
-                        <div class="row" id="attendance_data"></div>
+                    <div class="card-footer bg-light p-4">
+                        <div class="row" id="attendance_data">
+                            <div class="col-12 text-center text-muted py-5">
+                                <i class="fas fa-clipboard-list fa-3x mb-3 text-gray-300"></i>
+                                <p>Select a subject and date range to view attendance history.</p>
+                            </div>
+                        </div>
                     </div>
+                    
                 </div>
-                <!-- /.card -->
-
-            </div>
+                </div>
         </div>
     </div>
 </section>
@@ -90,12 +110,11 @@
 <script>
     $(document).ready(function () {
 
-       
         $("#fetch_attendance").click(function () {
             var subject = $("#subject").val()
             var start_date = $("#start_date").val()
             var end_date = $("#end_date").val()
-            if (subject.length  == 0 || end_date.length ==0 ||start_date.length == 0){
+            if (subject.length == 0 || end_date.length == 0 || start_date.length == 0) {
                 alert("Please Select Subject and Date Range");
                 return false;
             }
@@ -106,7 +125,7 @@
                 data: {
                     subject: subject,
                     start_date: start_date,
-                    end_date:end_date
+                    end_date: end_date
                 }
             }).done(function (response) {
                 var json_data = JSON.parse(response)
@@ -115,15 +134,16 @@
 
                 } else {
                     var div_data = ""
-                         
-                    for (key in json_data) {
-                    if (json_data[key]['status']){
-                        div_data += "<div class='col-lg-3 attendance_div_green'><b>"+ json_data[key]['date'] + "</b><br/>Present</div>" 
-                    }else{
 
-                        div_data += "<div class='col-lg-3 attendance_div_red'><b>"+ json_data[key]['date'] + "</b><br/>Absent</div>"
+                    for (key in json_data) {
+                        if (json_data[key]['status']) {
+                            // The class 'attendance_div_green' is styled in the CSS block above
+                            div_data += "<div class='col-lg-3 col-md-4 col-sm-6'><div class='attendance_div_green'><b>" + json_data[key]['date'] + "</b><br/>Present</div></div>"
+                        } else {
+                            // The class 'attendance_div_red' is styled in the CSS block above
+                            div_data += "<div class='col-lg-3 col-md-4 col-sm-6'><div class='attendance_div_red'><b>" + json_data[key]['date'] + "</b><br/>Absent</div></div>"
+                        }
                     }
-                }
                     div_data += ""
                     $("#attendance_data").html(div_data)
 
@@ -131,10 +151,6 @@
             }).fail(function (response) {
                 $("#attendance_data").html("Error While Fetching Records")
             })
-
-
-          
-
         })
     })
 </script>

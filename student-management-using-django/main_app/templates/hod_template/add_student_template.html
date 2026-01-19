@@ -1,42 +1,63 @@
 {% extends 'main_app/base.html' %}
 {% load static %}
+
 {% block custom_css %}
   <style>
+      /* Modernized Validation Messages */
       .invalid{
-        font-style: italic;
-        font-weight: bold;
-        color: red;
+        color: #dc3545; /* Bootstrap Danger Red */
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-top: 5px;
+        display: block;
+        padding-left: 5px;
+        border-left: 3px solid #dc3545;
       }
       .valid{
-        font-style: italic;
-        font-weight: bold;
-        color: green;
+        color: #28a745; /* Bootstrap Success Green */
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-top: 5px;
+        display: block;
+        padding-left: 5px;
+        border-left: 3px solid #28a745;
       }
   </style>
 {% endblock custom_css %}
+
 {% block page_title %}{{page_title}}{% endblock page_title %}
 
 {% block content %}
 
-<section class="content">
+<section class="content py-5" style="background-color: #f4f6f9;">
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <!-- general form elements -->
-                <div class="card card-primary">
-                    <div class="card-header">
-                        <h3 class="card-title">{{page_title}}</h3>
+        <div class="row justify-content-center">
+            
+            <div class="col-md-8">
+                
+                <div class="card border-0 shadow-lg" style="border-radius: 15px; overflow: hidden;">
+                    
+                    <div class="card-header border-0 py-3" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <div class="d-flex align-items-center">
+                            <div class="icon-box bg-white text-primary rounded-circle d-flex align-items-center justify-content-center mr-3" style="width: 40px; height: 40px;">
+                                <i class="fas fa-user-graduate"></i>
+                            </div>
+                            <h3 class="card-title m-0 text-white font-weight-bold">{{page_title}}</h3>
+                        </div>
                     </div>
 
-                    {% include "main_app/form_template.html" with messages=messages  form=form button_text="Add Student"%}
-                </div>
-                <!-- /.card -->
+                    <div class="card-body p-5 bg-white">
+                        <p class="text-muted mb-4">Please fill in the details below to enroll a new student.</p>
 
-            </div>
+                        {% include "main_app/form_template.html" with messages=messages  form=form button_text="Add Student"%}
+                    </div>
+                </div>
+                </div>
         </div>
     </div>
 </section>
 {% endblock content %}
+
 {% block custom_js %}
 <script>
     function validateEmail(email) {

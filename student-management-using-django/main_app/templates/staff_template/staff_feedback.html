@@ -4,52 +4,98 @@
 
 {% block content %}
 
-<section class="content">
+<section class="content py-5" style="background-color: #f4f6f9;">
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <!-- general form elements -->
-                <div class="card card-primary">
-                    <div class="card-header">
-                        <h3 class="card-title">{{page_title}}</h3>
+        
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-8">
+                <div class="card border-0 shadow-lg" style="border-radius: 15px; overflow: hidden;">
+                    
+                    <div class="card-header border-0 py-3" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <div class="d-flex align-items-center">
+                            <div class="icon-box bg-white text-primary rounded-circle d-flex align-items-center justify-content-center mr-3" style="width: 40px; height: 40px;">
+                                <i class="fas fa-comment-dots"></i>
+                            </div>
+                            <h3 class="card-title m-0 text-white font-weight-bold">Submit Feedback</h3>
+                        </div>
                     </div>
 
-                    {% include "main_app/form_template.html" with messages=messages  form=form button_text="Submit Feedback"%}
+                    <div class="card-body p-5 bg-white">
+                        <p class="text-muted mb-4">Have a suggestion or issue? Send us your feedback below.</p>
+                        {% include "main_app/form_template.html" with messages=messages form=form button_text="Submit Feedback"%}
+                    </div>
                 </div>
-                <!-- /.card -->
-<div class="card card-primary">
-    <div class="card-header"><h3 class="card-title">{{page_title}}</h3>
-    </div>
-   <div class="table p-2">
-
-       <table class="table table-bordered">
-           <tr>
-               <th>ID</th>
-               <th>Feedback</th>
-               <th>Reply</th>
-            <th>Created At</th>
-        </tr>
-        {% for feedback in feedbacks %}
-        <tr>
-            <td>{{forloop.counter}}</td>
-            <td>{{feedback.feedback}}</td>
-              <td>
-                  
-                  {% if feedback.reply == "" %}
-                      <p class="badge badge-warning">No Response Yet</p>
-                      {% else %}
-                      {{feedback.reply}}
-                  {% endif %}
-                      
-              </td>
-              <td>{{feedback.created_at}}</td>
-            </tr>
-            {% endfor %}
-        </table>
-    </div>
-    </div>
             </div>
         </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card border-0 shadow-sm" style="border-radius: 15px;">
+                    
+                    <div class="card-header bg-white py-3 border-0 d-flex align-items-center">
+                        <h4 class="card-title font-weight-bold text-dark m-0">
+                            <i class="fas fa-history text-muted mr-2"></i> Feedback History
+                        </h4>
+                    </div>
+
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead class="bg-light">
+                                    <tr>
+                                        <th class="py-3 pl-4 text-uppercase text-muted small font-weight-bold" style="width: 50px;">ID</th>
+                                        <th class="py-3 text-uppercase text-muted small font-weight-bold" style="width: 30%;">My Feedback</th>
+                                        <th class="py-3 text-uppercase text-muted small font-weight-bold" style="width: 30%;">Admin Reply</th>
+                                        <th class="py-3 text-uppercase text-muted small font-weight-bold text-center">Submitted On</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for feedback in feedbacks %}
+                                    <tr style="border-bottom: 1px solid #f0f2f5;">
+                                        
+                                        <td class="pl-4 py-3 font-weight-bold text-muted">{{forloop.counter}}</td>
+                                        
+                                        <td class="py-3">
+                                            <span class="text-dark font-weight-medium">{{feedback.feedback}}</span>
+                                        </td>
+                                        
+                                        <td class="py-3">
+                                            {% if feedback.reply == "" %}
+                                                <span class="badge badge-pill badge-warning text-white shadow-sm px-3 py-2">
+                                                    <i class="fas fa-hourglass-half mr-1"></i> Awaiting Response
+                                                </span>
+                                            {% else %}
+                                                <div class="p-2 bg-light rounded border-left border-success border-4 shadow-sm" style="border-left-width: 4px !important;">
+                                                    <small class="text-success font-weight-bold d-block mb-1">
+                                                        <i class="fas fa-reply mr-1"></i> Admin Replied:
+                                                    </small>
+                                                    <span class="text-dark small">{{feedback.reply}}</span>
+                                                </div>
+                                            {% endif %}
+                                        </td>
+
+                                        <td class="py-3 text-center text-muted small">
+                                            <i class="far fa-calendar-alt mr-1"></i> {{feedback.created_at}}
+                                        </td>
+
+                                    </tr>
+                                    {% endfor %}
+
+                                    {% if not feedbacks %}
+                                    <tr>
+                                        <td colspan="4" class="text-center py-5 text-muted">
+                                            <i class="far fa-comments fa-3x mb-3 text-gray-300"></i>
+                                            <p>No feedback history found.</p>
+                                        </td>
+                                    </tr>
+                                    {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div> </div>
+            </div>
+        </div>
+
     </div>
 </section>
 {% endblock content %}
