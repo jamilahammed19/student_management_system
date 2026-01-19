@@ -3,73 +3,79 @@
 {% block page_title %}{{page_title}}{% endblock page_title %}
 {% block content %}
 
-<section class="content">
+<section class="content py-5" style="background-color: #f4f6f9;">
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <!-- general form elements -->
-                <div class="card card-primary">
-                    <div class="card-header">
-                        <h3 class="card-title">{{page_title}}</h3>
+        <div class="row justify-content-center">
+            
+            <div class="col-md-8">
+                
+                <div class="card border-0 shadow-lg" style="border-radius: 15px; overflow: hidden;">
+                    
+                    <div class="card-header border-0 py-3" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <div class="d-flex align-items-center">
+                            <div class="icon-box bg-white text-primary rounded-circle d-flex align-items-center justify-content-center mr-3" style="width: 40px; height: 40px;">
+                                <i class="fas fa-user-edit"></i>
+                            </div>
+                            <h3 class="card-title m-0 text-white font-weight-bold">{{page_title}}</h3>
+                        </div>
                     </div>
 
-                    <!-- /.card-header -->
-                    <!-- form start -->
-                    <div class="card-body">
-
-
-
-                        <div class="form-group">
-                            <label>Subject</label>
-                            <select name="subject" class="form-control" id='subject'>
-                                <option value="">----</option>
-                                {% for subject in subjects  %}
-                                <option value="{{subject.id}}">{{subject.name}}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Session</label>
-                            <select name="session" class="form-control" id='session'>
-                                <option value="">----</option>
-                                {% for session in sessions  %}
-                                <option value="{{session.id}}">{{session}}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div class="form-group"><div  style="display: none;" class="alert alert-danger" id='error_attendance'></div>
-                                <div class="alert alert-success" id='success_attendance' style="display: none;"></div>
-                             <button type="button" id='fetch_attendance' class="btn btn-primary btn-block">Fetch
-                                    Attendance</button>
-                        </div>
-                    <!-- /.card-body -->
-                    
+                    <div class="card-body p-5 bg-white">
                         
-                               
-                            <div class="form-group" style="display: none;" id="attendance_block">
-                            <div class="form-group">
-                                <label>Attendance Date</label>
-                                <select name="attendance_date" id='attendance_date' class="form-control">
-                               
+                        <div class="mb-4">
+                            <h6 class="text-uppercase text-muted font-weight-bold small mb-3">Step 1: Select Criteria</h6>
+                            
+                            <div class="form-group mb-3">
+                                <label class="font-weight-bold text-dark">Subject</label>
+                                <select name="subject" class="form-control form-control-lg border-2 shadow-sm" id='subject' style="border-radius: 10px;">
+                                    <option value="">-- Select Subject --</option>
+                                    {% for subject in subjects  %}
+                                    <option value="{{subject.id}}">{{subject.name}}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
-                            <div class="form-group">
-                                
-                            <div id="fetch_student_block" style="display: none;">
-                                <button type="button" id='fetch_student' class="btn btn-primary btn-block">Fetch Students</button>
-
-                            <!-- <button style="display: none;" type="button" id='save_attendance' class="btn btn-primary btn-block">Save Data</button> -->
-
+                            
+                            <div class="form-group mb-3">
+                                <label class="font-weight-bold text-dark">Session</label>
+                                <select name="session" class="form-control form-control-lg border-2 shadow-sm" id='session' style="border-radius: 10px;">
+                                    <option value="">-- Select Session --</option>
+                                    {% for session in sessions  %}
+                                    <option value="{{session.id}}">{{session}}</option>
+                                    {% endfor %}
+                                </select>
                             </div>
-                            <div id='student_data' class="card-footer">
 
+                            <div class="alert alert-danger shadow-sm border-0" id='error_attendance' style="display: none; border-radius: 10px;"></div>
+                            <div class="alert alert-success shadow-sm border-0" id='success_attendance' style="display: none; border-radius: 10px;"></div>
+
+                            <button type="button" id='fetch_attendance' class="btn btn-primary btn-block btn-lg shadow-sm mt-4" style="border-radius: 10px;">
+                                <i class="fas fa-search mr-2"></i> Fetch Attendance Dates
+                            </button>
+                        </div>
+                        
+                        <hr class="my-4">
+
+                        <div id="attendance_block" style="display: none;">
+                            <h6 class="text-uppercase text-muted font-weight-bold small mb-3">Step 2: Select Date to Update</h6>
+                            
+                            <div class="form-group mb-4">
+                                <label class="font-weight-bold text-dark">Attendance Date</label>
+                                <select name="attendance_date" id='attendance_date' class="form-control form-control-lg border-2 shadow-sm" style="border-radius: 10px;">
+                                    </select>
+                            </div>
+                            
+                            <div id="fetch_student_block" style="display: none;">
+                                <button type="button" id='fetch_student' class="btn btn-info btn-block btn-lg shadow-sm" style="border-radius: 10px;">
+                                    <i class="fas fa-users mr-2"></i> Fetch Student Data
+                                </button>
                             </div>
                         </div>
-                    </div>  
-                </div>
-                <!-- /.card -->
 
-            </div>
+                    </div> <div id='student_data' class="card-footer bg-light border-0 p-4">
+                        </div>
+
+                </div>
+                </div>
         </div>
     </div>
 </section>
@@ -109,7 +115,7 @@
                     $("#attendance_date").html(html)
                     $("#error_attendance").hide()
                     $("#error_attendance").html("")
-                    $("#attendance_block").show()  
+                    $("#attendance_block").fadeIn() // Added fade animation
                     $("#fetch_student_block").show()
                 }else{
                     $("#error_attendance").html("No Attendance Date Found For Specified Data")
@@ -132,12 +138,11 @@
         $("#fetch_student").click(function () {
             var attendance_date = $("#attendance_date").val()
             $("#student_data").html(null)
-if (attendance_date.length  == 0){
-    alert("Please Choose A Date");
-    $("#save_attendance").hide()
-
-    return false;
-}
+            if (attendance_date.length  == 0){
+                alert("Please Choose A Date");
+                $("#save_attendance").hide()
+                return false;
+            }
             $.ajax({
                 url: "{% url 'get_student_attendance' %}",
                 type: 'POST',
@@ -148,18 +153,30 @@ if (attendance_date.length  == 0){
                 var json_data = JSON.parse(response)
                 if (json_data.length < 1) {
                     alert("No data to display")
-            $("#save_attendance").hide()
+                    $("#save_attendance").hide()
 
                 } else {
-            $("#save_attendance").show()
-
-                    var div_data = "<hr/><div class='form-group'></div><div class='form-group'> <label>Student Attendance</label><div class='row'>"
+                    $("#save_attendance").show()
+                    
+                    // REDESIGNED HTML GENERATION FOR STUDENT LIST
+                    var div_data = "<div class='form-group'><label class='font-weight-bold text-muted text-uppercase small'>Update Attendance Status</label></div>"
+                    div_data += "<div class='row'>"
 
                     for (key in json_data) {
-                        div_data += "<div class='col-lg-3'><div class='form-check custom-control custom-checkbox'><input type='checkbox' class='custom-control-input' " + (json_data[key]['status'] ? "checked='checked'" : "")+" name='student_data[]' value=" + json_data[key]['id'] + " id='checkbox" + json_data[key]['id'] + "' /> <label for='checkbox" + json_data[key]['id'] + "' class='custom-control-label'>" + json_data[key]['name']  + (json_data[key]['status'] ? " [Present] " : " [Absent] ")+"</label></div> </div>"
+                        // Logic for badge color
+                        var status_badge = json_data[key]['status'] ? "<span class='badge badge-success ml-auto'>Present</span>" : "<span class='badge badge-danger ml-auto'>Absent</span>";
+                        
+                        div_data += "<div class='col-lg-6 mb-3'>"
+                        div_data += "<div class='card shadow-sm border-0 bg-white h-100'>"
+                        div_data += "<div class='card-body p-3 d-flex align-items-center'>"
+                        div_data += "<div class='custom-control custom-checkbox w-100 d-flex align-items-center'>"
+                        div_data += "<input type='checkbox' class='custom-control-input' " + (json_data[key]['status'] ? "checked='checked'" : "")+" name='student_data[]' value=" + json_data[key]['id'] + " id='checkbox" + json_data[key]['id'] + "' />"
+                        div_data += "<label for='checkbox" + json_data[key]['id'] + "' class='custom-control-label font-weight-bold text-dark ml-2 flex-grow-1' style='cursor:pointer;'>" + json_data[key]['name'] + "</label>"
+                        div_data += status_badge
+                        div_data += "</div></div></div></div>"
                     }
-                    div_data += "</div></div>"
-                    div_data += "<div class='form-group'><button id='save_attendance' class='btn btn-success' type='button'>Save Attendance</button></div>"
+                    div_data += "</div>"
+                    div_data += "<div class='form-group mt-3'><button id='save_attendance' class='btn btn-success btn-block btn-lg shadow-sm' style='border-radius: 10px;' type='button'><i class='fas fa-save mr-2'></i> Update Attendance</button></div>"
                     $("#student_data").html(div_data)
                 }
             }).fail(function (response) {
@@ -169,7 +186,7 @@ if (attendance_date.length  == 0){
         })
         $(document).on('click', '#save_attendance', function () {
             //$(this).attr("disabled","disabled")
-            $(this).text("Updating Attendance Data...")
+            $(this).html("<i class='fas fa-spinner fa-spin mr-2'></i> Updating Attendance Data...")
             var student_data = $("input[name='student_data[]']").map(function () {
                 if ($(this).is(":checked")){
                 return {'id':$(this).val(), 'status': 1};

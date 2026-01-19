@@ -1,40 +1,83 @@
 {% extends 'main_app/base.html' %}
 {% load static %}
 {% block page_title %}{{page_title}}{% endblock page_title %}
+
+{% block custom_css %}
+<style>
+    /* Styling for the Django Form inputs to ensure they look modern */
+    /* This handles cases where widgets might not have Bootstrap classes added in forms.py */
+    select, input[type="text"], input[type="number"] {
+        display: block;
+        width: 100%;
+        height: calc(2.25rem + 2px);
+        padding: .375rem .75rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: .25rem;
+        box-shadow: inset 0 0 0 transparent;
+        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        margin-bottom: 15px;
+    }
+    
+    label {
+        font-weight: 600 !important;
+        color: #6c757d;
+        margin-bottom: 5px;
+    }
+
+    /* Focus state */
+    select:focus, input:focus {
+        border-color: #80bdff;
+        outline: 0;
+        box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+    }
+</style>
+{% endblock custom_css %}
+
 {% block content %}
 
-<section class="content">
+<section class="content py-5" style="background-color: #f4f6f9;">
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <!-- general form elements -->
-                    <form method="POST">
-                        {% csrf_token %}
-                <div class="card card-primary">
-                    <div class="card-header">
-                        <h3 class="card-title">{{page_title}}</h3>
+        <div class="row justify-content-center">
+            
+            <div class="col-md-8">
+                
+                <form method="POST">
+                    {% csrf_token %}
+                    
+                    <div class="card border-0 shadow-lg" style="border-radius: 15px; overflow: hidden;">
+                        
+                        <div class="card-header border-0 py-3" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            <div class="d-flex align-items-center">
+                                <div class="icon-box bg-white text-primary rounded-circle d-flex align-items-center justify-content-center mr-3" style="width: 40px; height: 40px;">
+                                    <i class="fas fa-poll-h"></i>
+                                </div>
+                                <h3 class="card-title m-0 text-white font-weight-bold">{{page_title}}</h3>
+                            </div>
+                        </div>
+
+                        <div class="card-body p-5 bg-white">
+                            <div class="alert alert-light border shadow-sm mb-4" role="alert">
+                                <i class="fas fa-info-circle text-info mr-2"></i> 
+                                <span class="text-muted small">Select a Subject and Session to fetch students, then select a student to view or update their results.</span>
+                            </div>
+
+                            {{ form }}
+
+                        </div>
+                        <div class="card-footer bg-white border-0 p-4">
+                            <button type="submit" id='update_result' class="btn btn-primary btn-block btn-lg shadow-sm" style="border-radius: 10px;">
+                                <i class="fas fa-save mr-2"></i> Update Result
+                            </button>
+                        </div>
+                        
                     </div>
-
-       
-                    <!-- /.card-header -->
-                    <!-- form start -->
-                    <div class="card-body">
-
-
-                     
-
-                 {{ form }}
-
-                    </div>
-                    <!-- /.card-body -->
-
-                    <div class="card-footer">
-                        <button type="submit" id='update_result' class="btn btn-primary btn-block">Update Result</button>
-               
-                    </div>
-                </form>
-                </div>
-                <!-- /.card -->
+                    </form>
 
             </div>
         </div>
